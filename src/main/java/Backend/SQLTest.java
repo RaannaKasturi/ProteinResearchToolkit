@@ -4,7 +4,10 @@
  */
 package Backend;
 import java.sql.*;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.regex.*;
 /**
  *
  * @author prarthi kothari
@@ -34,8 +37,7 @@ public class SQLTest {
             System.out.println("Registered");
             Connection con;
             Statement smt;
-            con=DriverManager.getConnection("jdbc:mysql://localhost/PROTEINTOOLKIT", "root", "pk2803");
-            //con = DriverManager.getConnection("jdbc:mysql://mysql1.serv00.com/m1762_proteintoolkit.appData", "m1762_admin", "PTKnpk@2024");
+            con = DriverManager.getConnection("jdbc:mysql://tgj.h.filess.io:3307/ProteinToolkit_positivewe", "ProteinToolkit_positivewe", "7cfab746c1ffd2b58544cf136cb5fbdc192d9f7b");
             System.out.println("Connection Successful");
             smt = con.createStatement();
             
@@ -102,9 +104,8 @@ public class SQLTest {
             System.out.println("Registered");
             Connection con;
             Statement smt;
-            con=DriverManager.getConnection("jdbc:mysql://localhost/PROTEINTOOLKIT", "root", "pk2803");
             
-            //con = DriverManager.getConnection("jdbc:mysql://mysql1.serv00.com/m1762_proteintoolkit.appData", "m1762_admin", "PTKnpk@2024");
+            con = DriverManager.getConnection("jdbc:mysql://tgj.h.filess.io:3307/ProteinToolkit_positivewe", "ProteinToolkit_positivewe", "7cfab746c1ffd2b58544cf136cb5fbdc192d9f7b");
             System.out.println("Connection Successful");
             smt = con.createStatement();
             
@@ -142,6 +143,26 @@ public class SQLTest {
             e.printStackTrace();
         }
 
+    }
+    
+    public static String generateLicenseKey() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMMddHHmmss");
+        String formattedDate = dateFormat.format(new Date());
+        return "PTK" + formattedDate + "NPK";
+    }
+    
+    public static boolean isValidLicenseKey(String licenseKey) {
+        // Define the regex pattern for the license key
+        String regex = "PTK\\d{4}(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\\d{2}\\d{6}NPK";
+
+        // Compile the regex pattern
+        Pattern pattern = Pattern.compile(regex);
+
+        // Match the license key against the pattern
+        Matcher matcher = pattern.matcher(licenseKey);
+
+        // Return true if the license key matches the pattern, otherwise false
+        return matcher.matches();
     }
     
     public static void main(String[] args) {
