@@ -22,7 +22,7 @@ public class SQLTest {
     public void login()
     {
         try {
-            
+            boolean user_input = true;
             System.out.println("Enter Email ID: ");
             String email_id = sc.next();
             System.out.println("Enter Password: ");
@@ -30,11 +30,12 @@ public class SQLTest {
             System.out.println("Enter License Key: ");
             String license_key = sc.next();
             
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
             Connection con;
             Statement smt;
-            con = DriverManager.getConnection("jdbc:mysql://mysql1.serv00.com/m1762_proteintoolkit", "m1762_admin", "PTKnpk@2024");
+            con=DriverManager.getConnection("jdbc:mysql://localhost/PROTEINTOOLKIT", "root", "pk2803");
+            //con = DriverManager.getConnection("jdbc:mysql://mysql1.serv00.com/m1762_proteintoolkit.appData", "m1762_admin", "PTKnpk@2024");
             System.out.println("Connection Successful");
             smt = con.createStatement();
             
@@ -44,24 +45,29 @@ public class SQLTest {
             LICENSE_KEY (AUTOMATICALLY GENERATED)
             
             */
-            String sql = "SELECT * FROM appData WHERE EMAIL_ID = '" + email_id + "';";
+            String sql = "SELECT * FROM APPDATA WHERE EMAIL_ID = '" + email_id + "';";
             ResultSet rs = smt.executeQuery(sql);
+            
+            while(user_input)
+            {
+                if (rs.next()) {
+                    sql_email_id = rs.getString("EMAIL_ID");
+                    sql_password = rs.getString("PASSWORD");
+                    sql_license_key = rs.getString("LICENSE_KEY");
 
-            if (rs.next()) {
-                sql_email_id = rs.getString("EMAIL_ID");
-                sql_password = rs.getString("PASSWORD");
-                sql_license_key = rs.getString("LICENSE_KEY");
-
-                if (email_id.equals(sql_email_id) && password.equals(sql_password) && license_key.equals(sql_license_key)) {
-                    System.out.println("Login Successful.");
-                } 
-                else {
-                    System.out.println("Credentials do not match.");
+                    if (email_id.equals(sql_email_id) && password.equals(sql_password) && license_key.equals(sql_license_key)) {
+                        System.out.println("Login Successful.");
+                        user_input = false;
+                    } 
+                    else {
+                        System.out.println("Credentials do not match with email id.");
+                    }
                 }
-            }
- 
-            else {
-                System.out.println("User not found. Register to continue.");
+
+                else {
+                    System.out.println("User not found. Register to continue.");
+                    user_input = false;
+                }
             }
             rs.close();
             smt.close();
@@ -88,24 +94,28 @@ public class SQLTest {
             String password = sc.next();
             
             //GENERATE LICENSE_KEY AUTOMATICALLY - CODE REMAINING
-            String license_key = "";
+            Random rand = new Random();
+            //String license_key = "";
+            String license_key = "" + rand.nextInt();
             
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
             Connection con;
             Statement smt;
-            con = DriverManager.getConnection("jdbc:mysql://mysql1.serv00.com/m1762_proteintoolkit", "m1762_admin", "PTKnpk@2024");
+            con=DriverManager.getConnection("jdbc:mysql://localhost/PROTEINTOOLKIT", "root", "pk2803");
+            
+            //con = DriverManager.getConnection("jdbc:mysql://mysql1.serv00.com/m1762_proteintoolkit.appData", "m1762_admin", "PTKnpk@2024");
             System.out.println("Connection Successful");
             smt = con.createStatement();
             
             System.out.println("Registration Successful.");
 
-            String sql1 = "INSERT INTO appData VALUES('" + email_id + "','" + password + "','" + license_key + "');";
+            String sql1 = "INSERT INTO APPDATA VALUES('" + email_id + "','" + password + "','" + license_key + "');";
             smt.executeUpdate(sql1);
             
             //DISPLAY FINAL USER CREDENTIALS POST SUCCESSFUL REGISTRATION
             
-            String sql2 = "SELECT * FROM appData WHERE EMAIL_ID = '" + email_id + "';";
+            String sql2 = "SELECT * FROM APPDATA WHERE EMAIL_ID = '" + email_id + "';";
             ResultSet rs = smt.executeQuery(sql2);
 
             if (rs.next()) {
@@ -151,8 +161,8 @@ public class SQLTest {
             obj.choice = obj.sc.nextInt();
             switch(obj.choice)
             {
-                case 1: System.out.println("Option selected : 1. Login"); flag = false; break; //obj.login(); flag = false; break;
-                case 2: System.out.println("Option selected : 2. Register"); flag = false; break; //obj.register_user(); flag = false; break;
+                case 1: obj.login(); flag = false; break;
+                case 2: obj.register_user(); flag = false; break;
                 case 3: System.out.println("Option selected : 3. Exit"); System.exit(0); break;
                 default: System.out.println("No Option selected. Select only from 1 or 2 or 3"); break;
             }

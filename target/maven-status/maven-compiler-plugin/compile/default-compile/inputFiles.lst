@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Backend\ProcessingDialog.java
 C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Backend\PDBSearch.java
 C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Backend\PDBQuery.java
@@ -5,3 +6,12 @@ C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Frontend\
 C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Backend\SQLTest.java
 C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Backend\test.java
 C:\Users\prarthi kothari\OneDrive\Desktop\ProteinToolkit\src\main\java\Backend\UniProtSearch.java
+=======
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Backend\PDBSearch.java
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Backend\ProcessingDialog.java
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Backend\UniProtSearch.java
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Backend\test.java
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Backend\LicenseKeyGenVerify.java
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Frontend\MainFrame.java
+C:\Users\raanna\Desktop\ProteinToolkit\src\main\java\Backend\PDBQuery.java
+>>>>>>> c9cb0e71cc386b5dc4f8ad22de1f8427d1c893a0
