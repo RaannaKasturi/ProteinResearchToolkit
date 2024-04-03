@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package Backend;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Random;
@@ -30,8 +27,6 @@ public class SQLTest {
             String email_id = sc.next();
             System.out.println("Enter Password: ");
             String password = sc.next();
-            System.out.println("Enter License Key: ");
-            String license_key = sc.next();
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
@@ -57,7 +52,7 @@ public class SQLTest {
                     sql_password = rs.getString("PASSWORD");
                     sql_license_key = rs.getString("LICENSE_KEY");
 
-                    if (email_id.equals(sql_email_id) && password.equals(sql_password) && license_key.equals(sql_license_key)) {
+                    if (email_id.equals(sql_email_id) && password.equals(sql_password)) {
                         System.out.println("Login Successful.");
                         user_input = false;
                     } 
@@ -94,11 +89,7 @@ public class SQLTest {
             String email_id = sc.next();
             System.out.println("Enter Password: ");
             String password = sc.next();
-            
-            //GENERATE LICENSE_KEY AUTOMATICALLY - CODE REMAINING
-            Random rand = new Random();
-            //String license_key = "";
-            String license_key = "" + rand.nextInt();
+            String license_key = generateLicenseKey();
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
@@ -113,9 +104,7 @@ public class SQLTest {
 
             String sql1 = "INSERT INTO APPDATA VALUES('" + email_id + "','" + password + "','" + license_key + "');";
             smt.executeUpdate(sql1);
-            
-            //DISPLAY FINAL USER CREDENTIALS POST SUCCESSFUL REGISTRATION
-            
+                        
             String sql2 = "SELECT * FROM APPDATA WHERE EMAIL_ID = '" + email_id + "';";
             ResultSet rs = smt.executeQuery(sql2);
 
@@ -147,22 +136,8 @@ public class SQLTest {
     
     public static String generateLicenseKey() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMMddHHmmss");
-        String formattedDate = dateFormat.format(new Date());
+        String formattedDate = dateFormat.format(new Date(System.currentTimeMillis()));
         return "PTK" + formattedDate + "NPK";
-    }
-    
-    public static boolean isValidLicenseKey(String licenseKey) {
-        // Define the regex pattern for the license key
-        String regex = "PTK\\d{4}(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\\d{2}\\d{6}NPK";
-
-        // Compile the regex pattern
-        Pattern pattern = Pattern.compile(regex);
-
-        // Match the license key against the pattern
-        Matcher matcher = pattern.matcher(licenseKey);
-
-        // Return true if the license key matches the pattern, otherwise false
-        return matcher.matches();
     }
     
     public static void main(String[] args) {
