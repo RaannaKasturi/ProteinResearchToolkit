@@ -91,7 +91,7 @@ public class PDBSearch {
 
         // Add a new row for the current PDB entry
         SwingUtilities.invokeLater(() -> {
-            model.addRow(new Object[]{rcsbId, title, methods.toString()});
+            model.addRow(new Object[]{rcsbId, title, methods.toString(), "Visualize in 3D", "Send to Structure Alignment"});
         });
 
         connection.disconnect();

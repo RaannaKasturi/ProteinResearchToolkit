@@ -1,11 +1,17 @@
 package Backend;
 
+import Frontend.MainFrame;
 import org.biojava.nbio.structure.Structure;
 import org.biojava.nbio.structure.gui.BiojavaJmol;
 import org.biojava.nbio.structure.io.PDBFileReader;
 
 public class VisStruct {
-    
+    private MainFrame mainFrame;
+
+    public VisStruct(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
+
     public void VisStruct(String PDBID) {
         try {
             PDBFileReader pdbr = new PDBFileReader();

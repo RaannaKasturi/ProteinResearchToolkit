@@ -22,10 +22,12 @@ import javax.swing.table.DefaultTableModel;
 public class MainFrame extends javax.swing.JFrame {
     private UniProtSearch uni;
     private PDBSearch pdb;
+    private VisStruct vs;
     public MainFrame() {
         initComponents();
         uni = new UniProtSearch(this);
         pdb = new PDBSearch(this);
+        vs = new VisStruct(this);
     }
     public String getUniSearchText(){
         return jTextField1.getText();
@@ -78,8 +80,6 @@ public class MainFrame extends javax.swing.JFrame {
         processingThread.start();
         processingDialog.setVisible(true); // Display the processing dialog
     }
-
-    
             
     /**
      * This method is called from within the constructor to initialize the form.
@@ -278,11 +278,11 @@ public class MainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Protein ID", "Entry Name", "Method", "Visualization"
+                "Protein ID", "Entry Name", "Method", "Visualization", "Structure Alignment"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -292,6 +292,11 @@ public class MainFrame extends javax.swing.JFrame {
         jTable2.setCellSelectionEnabled(true);
         jTable2.setRowHeight(25);
         jTable2.setShowGrid(true);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane7.setViewportView(jTable2);
         jTable2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -421,6 +426,18 @@ public class MainFrame extends javax.swing.JFrame {
             processDialog(() -> prntStructData());
         }
     }//GEN-LAST:event_jTextField2KeyPressed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int row = jTable2.rowAtPoint(evt.getPoint());
+        int col = jTable2.columnAtPoint(evt.getPoint());
+        Object value = jTable2.getValueAt(row, 0);
+        if (row >= 0 && col == 3) {
+            processDialog(() -> vs.VisStruct(value.toString()));
+        }
+        if (row >= 0 && col == 4) {
+            processDialog(() -> jTextArea1.append(value.toString()+"\n"));
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments

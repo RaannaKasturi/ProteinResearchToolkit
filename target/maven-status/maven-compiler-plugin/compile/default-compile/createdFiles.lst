@@ -1,5 +1,6 @@
 Frontend\MainFrame$6.class
 Backend\PDBQuery.class
+Frontend\MainFrame$10.class
 Backend\SQLTest.class
 Frontend\MainFrame$5.class
 Backend\UniProtSearch.class
@@ -8,16 +9,10 @@ Frontend\MainFrame.class
 Backend\PDBSearch.class
 Backend\ProcessingDialog.class
 Frontend\MainFrame$7.class
-Backend\DynamicButtonTableExample.class
 Backend\VisStruct.class
 Frontend\MainFrame$2.class
 Frontend\MainFrame$3.class
 Frontend\MainFrame$9.class
 Backend\LicenseKeyGenVerify.class
-Backend\DynamicButtonTableExample$ButtonEditor.class
 Frontend\MainFrame$8.class
-Backend\JTableButtonModel.class
-Backend\JTableButtonRenderer.class
-Backend\test.class
-Backend\DynamicButtonTableExample$ButtonRenderer.class
 Frontend\MainFrame$4.class
