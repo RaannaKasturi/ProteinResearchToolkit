@@ -15,7 +15,7 @@ public class VisStruct {
     public void VisStruct(String PDBID) {
         try {
             PDBFileReader pdbr = new PDBFileReader();
-            pdbr.setPath("./assets");
+            System.setProperty("PDB_DIR", "./assets");
             String pdbCode = PDBID;
             Structure struc = pdbr.getStructureById(pdbCode);
             BiojavaJmol jmolPanel = new BiojavaJmol();
