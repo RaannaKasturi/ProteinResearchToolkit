@@ -2,7 +2,7 @@ package Frontend;
 
 import Backend.*;
 
-//import com.formdev.flatlaf.themes.FlatMacLightLaf; 
+import com.formdev.flatlaf.themes.FlatMacLightLaf; 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-//import javax.swing.UIManager;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
@@ -278,11 +278,11 @@ public class MainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Protein ID", "Entry Name", "Method"
+                "Protein ID", "Entry Name", "Method", "Visualization"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -427,7 +427,7 @@ public class MainFrame extends javax.swing.JFrame {
      * @throws javax.swing.UnsupportedLookAndFeelException
      */
     public static void main(String args[]) throws UnsupportedLookAndFeelException {
-        //UIManager.setLookAndFeel(new FlatMacLightLaf());
+        UIManager.setLookAndFeel(new FlatMacLightLaf());
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

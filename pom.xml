@@ -135,6 +135,18 @@
             <classifier>windows-arm64</classifier>
             <type>dll</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.22.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eclipse</groupId>
+            <artifactId>eclipse-jface</artifactId>
+            <version>2.1.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
