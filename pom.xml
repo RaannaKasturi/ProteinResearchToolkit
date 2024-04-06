@@ -26,11 +26,7 @@
           <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.biojava/biojava-alignment -->
-	<dependency>
-	    <groupId>org.biojava</groupId>
-	    <artifactId>biojava-alignment</artifactId>
-	    <version>7.1.1</version>
-	</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-core -->
 	<dependency>
 	    <groupId>org.biojava</groupId>
@@ -44,18 +40,9 @@
 	    <version>4.2.12</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-structure -->
-	<dependency>
-	    <groupId>org.biojava</groupId>
-	    <artifactId>biojava-structure</artifactId>
-	    <version>7.1.1</version>
-	    <type>jar</type>
-	</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-structure-gui -->
-	<dependency>
-	    <groupId>org.biojava</groupId>
-	    <artifactId>biojava-structure-gui</artifactId>
-	    <version>7.1.1</version>
-	</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-modfinder -->
 	<dependency>
 	    <groupId>org.biojava</groupId>
@@ -145,6 +132,12 @@
             <groupId>eclipse</groupId>
             <artifactId>eclipse-jface</artifactId>
             <version>2.1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.biojava</groupId>
+            <artifactId>biojava-structure-gui</artifactId>
+            <version>7.1.1</version>
             <type>jar</type>
         </dependency>
     </dependencies>

@@ -3,18 +3,9 @@ package Frontend;
 import Backend.*;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf; 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
@@ -24,12 +15,14 @@ public class MainFrame extends javax.swing.JFrame {
     private PDBSearch pdb;
     private VisStruct vs;
     private StructAli sa;
+    private ProcessDialog pd;
     public MainFrame() {
         initComponents();
         uni = new UniProtSearch(this);
         pdb = new PDBSearch(this);
         vs = new VisStruct(this);
         sa = new StructAli(this);
+        pd = new ProcessDialog(this);
     }
     public String getUniSearchText(){
         return jTextField1.getText();
@@ -52,37 +45,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void processDialog(Runnable function) {
-        JDialog processingDialog = new JDialog();
-        JLabel processingLabel = new JLabel("Processing...\nPlease Wait", SwingConstants.CENTER);
-        JProgressBar progressBar = new JProgressBar();
-        progressBar.setPreferredSize(new Dimension(100, 10)); // Set width to 100
-        progressBar.setIndeterminate(true);
-        // Create a panel to hold label and progress bar with padding
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 50, 10)); // Add padding
-        panel.add(processingLabel, BorderLayout.CENTER);
-        panel.add(progressBar, BorderLayout.SOUTH);
-
-        processingDialog.setContentPane(panel);
-        processingDialog.setSize(300, 200); // Increased height
-        processingDialog.setLocationRelativeTo(null); // Center the dialog on the screen
-        processingDialog.setModal(true);
-        processingDialog.setTitle("Processing");
-        processingDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Disable closing
-        processingDialog.setAlwaysOnTop(true); // Show dialog on top of other windows
-
-        Thread processingThread = new Thread(() -> {
-            // Simulate a long-running process
-            function.run();
-
-            SwingUtilities.invokeLater(() -> processingDialog.dispose()); // Close the dialog when processing is done
-        });
-        processingThread.start();
-        processingDialog.setVisible(true); // Display the processing dialog
-    }
-     
+         
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -415,7 +378,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        processDialog(() -> uni.dispUniProt());
+        pd.processDialog(() -> uni.dispUniProt());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
@@ -426,12 +389,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
-            processDialog(() -> uni.dispUniProt());
+            pd.processDialog(() -> uni.dispUniProt());
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        processDialog(() -> prntStructData());
+        pd.processDialog(() -> prntStructData());
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
@@ -442,7 +405,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
-            processDialog(() -> prntStructData());
+            pd.processDialog(() -> prntStructData());
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
@@ -451,15 +414,17 @@ public class MainFrame extends javax.swing.JFrame {
         int col = jTable2.columnAtPoint(evt.getPoint());
         Object value = jTable2.getValueAt(row, 0);
         if (row >= 0 && col == 3) {
-            processDialog(() -> vs.VisStruct(value.toString()));
+            pd.processDialog(() -> vs.VisStruct(value.toString()));
         }
         if (row >= 0 && col == 4) {
-            processDialog(() -> jTextArea1.append(value.toString()+"\n"));
+            pd.processDialog(() -> jTextArea1.append(value.toString()+"\n"));
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        pd.processDialog(() -> sa.StructAli(jTextArea1.getText()));
+        //MultipleAlignmentGUI.getInstance();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -499,7 +464,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     public javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextArea1;
+    public javax.swing.JTextArea jTextArea1;
     public javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

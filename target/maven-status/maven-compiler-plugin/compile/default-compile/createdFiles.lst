@@ -7,8 +7,8 @@ Frontend\MainFrame$5.class
 Backend\UniProtSearch.class
 Frontend\MainFrame$1.class
 Frontend\MainFrame.class
+Backend\ProcessDialog.class
 Backend\PDBSearch.class
-Backend\ProcessingDialog.class
 Frontend\MainFrame$7.class
 Backend\StructAli.class
 Backend\VisStruct.class
