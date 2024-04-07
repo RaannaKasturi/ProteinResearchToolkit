@@ -142,11 +142,14 @@
             <type>jar</type>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jbibtex/jbibtex -->
+        
         <dependency>
             <groupId>org.jbibtex</groupId>
             <artifactId>jbibtex</artifactId>
             <version>1.0.20</version>
+            <type>jar</type>
         </dependency>
+        
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
@@ -165,6 +168,7 @@
             <version>3.0.0</version>
             <type>jar</type>
         </dependency>
+        
     </dependencies>
     <build>
         <plugins>

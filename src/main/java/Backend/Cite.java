@@ -3,11 +3,17 @@ package Backend;
 import de.undercouch.citeproc.output.Bibliography;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Map;
 
 import org.jbibtex.*;
+//import BibTexParser.BibTeXParser;
+//import bibtexparser.BibTeXDatabase;
+//import bibtexparser.BibTeXEntry;
 
 public class Cite {
 
@@ -42,14 +48,19 @@ public class Cite {
     }
 
     public static String convertToAPA(String bibData, String doi) throws Exception {
-        Bibliography bibliography = BibTeXParser.parse(bibData);
-        String[] entries = bibliography.getEntries();
+
+        Reader reader = new StringReader(bibData); 
+        
+        BibTeXParser bibtexParser = new org.jbibtex.BibTeXParser();
+        BibTeXDatabase database = bibtexParser.parse(reader);
+        
+        Map<Key, BibTeXEntry> entries = database.getEntries();
 
         if (entries.isEmpty()) {
             throw new RuntimeException("No BibTeX entries found for the provided DOI.");
         }
 
-        BibTeXEntry entry = entries.get(0);
+        BibTeXEntry entry = entries.values().iterator().next();
 
         // Extract required fields
         String author = entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString();
