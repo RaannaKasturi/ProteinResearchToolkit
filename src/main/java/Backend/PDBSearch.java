@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
@@ -60,6 +59,7 @@ public class PDBSearch {
         return identifiersArray;
     }
     
+    
     public void dispPDB(String PDBID) throws IOException {
         String endpoint = "https://data.rcsb.org/rest/v1/core/entry/"+PDBID;
         URL url = new URL(endpoint);
@@ -85,11 +85,7 @@ public class PDBSearch {
         if (methods.length() > 0) {
             methods.setLength(methods.length() - 2);
         }
-
-        // Get the table model
         DefaultTableModel model = (DefaultTableModel) mainFrame.jTable2.getModel();
-
-        // Add a new row for the current PDB entry
         SwingUtilities.invokeLater(() -> {
             model.addRow(new Object[]{rcsbId, title, methods.toString(), "Visualize in 3D", "Send to Structure Alignment"});
         });

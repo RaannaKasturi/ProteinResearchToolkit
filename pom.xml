@@ -39,11 +39,6 @@
 	    <artifactId>biojava-phylo</artifactId>
 	    <version>4.2.12</version>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-structure -->
-	
-	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-structure-gui -->
-	
-	<!-- https://mvnrepository.com/artifact/org.biojava/biojava-modfinder -->
 	<dependency>
 	    <groupId>org.biojava</groupId>
 	    <artifactId>biojava-modfinder</artifactId>
@@ -168,7 +163,39 @@
             <version>3.0.0</version>
             <type>jar</type>
         </dependency>
-        
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.12.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.webdriver</groupId>
+            <artifactId>webdriver-common</artifactId>
+            <version>0.9.7376</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.7.3</version> 
+        </dependency>
+    <dependency>
+        <groupId>org.selenium</groupId>
+        <artifactId>selenium-chrome-driver</artifactId>
+        <version>4.7.3</version>
+    </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+            <version>4.19.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

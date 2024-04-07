@@ -16,6 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
     private VisStruct vs;
     private StructAli sa;
     private ProcessDialog pd;
+    private PMCSearch ps;
     public MainFrame() {
         initComponents();
         uni = new UniProtSearch(this);
@@ -23,12 +24,16 @@ public class MainFrame extends javax.swing.JFrame {
         vs = new VisStruct(this);
         sa = new StructAli(this);
         pd = new ProcessDialog(this);
+        ps = new PMCSearch(this);
     }
     public String getUniSearchText(){
         return jTextField1.getText();
     }
     public String getPDBSearchText(){
         return jTextField2.getText();
+    }
+    public String getPMCSearchText(){
+        return jTextField3.getText();
     }
     public DefaultTableModel getTableModel() {
         return (DefaultTableModel) jTable1.getModel();
@@ -80,11 +85,14 @@ public class MainFrame extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        Citation = new javax.swing.JPanel();
+        PMCSearch = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        Citation = new javax.swing.JPanel();
+        jTextField4 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Protein Toolkit");
@@ -186,6 +194,7 @@ public class MainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.setColumnSelectionAllowed(true);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.setName("UniProt Results"); // NOI18N
@@ -222,6 +231,8 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Protein Sequence Search", UniProtSearch);
+
+        PDBSearch.setBackground(new java.awt.Color(204, 204, 255));
 
         jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jTextField2.setText("Search Protein here...");
@@ -261,6 +272,7 @@ public class MainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable2.setCellSelectionEnabled(true);
         jTable2.setRowHeight(25);
         jTable2.setShowGrid(true);
@@ -354,23 +366,40 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Structural Alignment", StructureAlignment);
 
-        jTextField3.setText("Enter DOI ID");
+        PMCSearch.setBackground(new java.awt.Color(204, 204, 204));
 
-        jButton2.setText("Generate Citation");
+        jTextField3.setText("Enter a Query...");
+        jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField3MouseClicked(evt);
+            }
+        });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+        });
+
+        jButton2.setText("Search PMC");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "APA Citation", "Copy Citation"
+                "PMC ID", "Title", "Journal", "Year", "DOI ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -381,7 +410,61 @@ public class MainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable3.setCellSelectionEnabled(true);
         jScrollPane3.setViewportView(jTable3);
+
+        javax.swing.GroupLayout PMCSearchLayout = new javax.swing.GroupLayout(PMCSearch);
+        PMCSearch.setLayout(PMCSearchLayout);
+        PMCSearchLayout.setHorizontalGroup(
+            PMCSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PMCSearchLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PMCSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(PMCSearchLayout.createSequentialGroup()
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(0, 478, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        PMCSearchLayout.setVerticalGroup(
+            PMCSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PMCSearchLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PMCSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("PMC Search", PMCSearch);
+
+        Citation.setBackground(new java.awt.Color(153, 153, 255));
+
+        jTextField4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jTextField4.setText("Enter DOI ID...");
+        jTextField4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField4MouseClicked(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField4KeyPressed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jButton3.setText("Search");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout CitationLayout = new javax.swing.GroupLayout(Citation);
         Citation.setLayout(CitationLayout);
@@ -389,28 +472,22 @@ public class MainFrame extends javax.swing.JFrame {
             CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CitationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(CitationLayout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(0, 450, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3)
+                .addContainerGap(622, Short.MAX_VALUE))
         );
         CitationLayout.setVerticalGroup(
             CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CitationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(481, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("APA Citation Generator", Citation);
+        jTabbedPane1.addTab("Generate Citation", Citation);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -490,6 +567,51 @@ public class MainFrame extends javax.swing.JFrame {
         //MultipleAlignmentGUI.getInstance();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        pd.processDialog(() -> {
+            try {
+                ps.DispPubMed(jTextField3.getText());
+            } catch (Exception ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            pd.processDialog(() -> {
+                try {
+                    ps.DispPubMed(jTextField3.getText());
+                } catch (Exception ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
+    }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jTextField4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField4MouseClicked
+        if(jTextField2.getText().equals("Enter DOI ID...")) {
+            jTextField2.setText("");
+        }
+    }//GEN-LAST:event_jTextField4MouseClicked
+
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            //pd.processDialog(() -> );
+        }
+    }//GEN-LAST:event_jTextField4KeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //pd.processDialog(() -> );
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField3MouseClicked
+        if(jTextField3.getText().equals("Enter a Query...")) {
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField3MouseClicked
+
     /**
      * @param args the command line arguments
      * @throws javax.swing.UnsupportedLookAndFeelException
@@ -508,11 +630,13 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Citation;
     private javax.swing.JPanel PDBSearch;
+    private javax.swing.JPanel PMCSearch;
     private javax.swing.JPanel StructureAlignment;
     private javax.swing.JPanel UniProtSearch;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -528,13 +652,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable1;
     public javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    public javax.swing.JTable jTable3;
     public javax.swing.JTextArea jTextArea1;
     public javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

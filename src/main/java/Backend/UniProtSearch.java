@@ -43,7 +43,6 @@ public class UniProtSearch {
         String url = "https://rest.uniprot.org/uniprotkb/search?download=true&fields=accession%2Cid%2Cgene_names%2Corganism_name%2Clength%2Csequence&format=tsv&query=%28" + pquery + "%29&size=50";
         DefaultTableModel model = mainFrame.getTableModel();
         model.setRowCount(0);
-
         try {
             List<String[]> data = fetchData(url);
             if (data != null && !data.isEmpty()) {

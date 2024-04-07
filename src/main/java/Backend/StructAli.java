@@ -17,9 +17,7 @@ public class StructAli {
     public StructAli(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
     }
-    
-    
-    
+
     public void StructAli(String PDBIDs) {
         System.setProperty("PDB_DIR", "./assets");
         List<String> names = new ArrayList<>();
@@ -27,7 +25,6 @@ public class StructAli {
             names.add(name);
         }
         try {
-            //Load the CA atoms of the structures and create the structure identifiers
             AtomCache cache = new AtomCache();
             List<Atom[]> atomArrays = new ArrayList<Atom[]>();
             List<StructureIdentifier> identifiers = new ArrayList<StructureIdentifier>();
@@ -35,24 +32,16 @@ public class StructAli {
               atomArrays.add(cache.getAtoms(name));
               identifiers.add(new SubstructureIdentifier(name));
             }
-
-            //Generate the multiple alignment algorithm with the chosen pairwise algorithm
             StructureAlignment pairwise  = StructureAlignmentFactory.getAlgorithm(FatCatFlexible.algorithmName);
             MultipleMcMain multiple = new MultipleMcMain(pairwise);
-
-            //Perform the alignment
             MultipleAlignment result = multiple.align(atomArrays);
-
-            // Set the structure identifiers, so that each atom array can be identified in the outputs
             result.getEnsemble().setStructureIdentifiers(identifiers);
-
-            //Output the FASTA sequence alignment
             System.out.println(MultipleAlignmentWriter.toFASTA(result));
             mainFrame.jTextArea2.setText(MultipleAlignmentWriter.toFASTA(result));
-            //Display the results in a 3D view
             MultipleAlignmentJmolDisplay.display(result);
         } catch (Exception e) {
             e.printStackTrace();
+            mainFrame.jTextArea2.setText("No Structural Alignments found between "+ names);
         }
     }
 }

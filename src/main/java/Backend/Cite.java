@@ -1,19 +1,14 @@
 package Backend;
 
-import de.undercouch.citeproc.output.Bibliography;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 import java.util.Map;
 
 import org.jbibtex.*;
-//import BibTexParser.BibTeXParser;
-//import bibtexparser.BibTeXDatabase;
-//import bibtexparser.BibTeXEntry;
 
 public class Cite {
 
@@ -26,7 +21,8 @@ public class Cite {
             String apaCitation = convertToAPA(bibData, doi);
 
             System.out.println("APA Citation:");
-            System.out.println(apaCitation);
+            String correctedString = apaCitation.replace('�', '-');
+            System.out.println(correctedString);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +91,7 @@ public class Cite {
 
             formattedAuthors.append(lastName).append(", ").append(formattedFirstName);
             if (i < authorList.length - 1) {
-                formattedAuthors.append(" & ");
+                formattedAuthors.append("& ");
             }
         }
 
