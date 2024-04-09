@@ -2,6 +2,7 @@ Frontend\MainFrame$6.class
 Frontend\MainFrame$11.class
 Backend\SQLTest.class
 Frontend\MainFrame$1.class
+Backend\ArticleSearch.class
 Backend\StructAli.class
 Frontend\MainFrame$16.class
 Frontend\MainFrame$3.class
@@ -24,6 +25,5 @@ Backend\Cite.class
 Backend\VisStruct.class
 Frontend\MainFrame$2.class
 Frontend\MainFrame$9.class
-Backend\PMCSearch.class
 Frontend\MainFrame$4.class
 Frontend\MainFrame$14.class

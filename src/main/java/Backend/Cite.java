@@ -13,20 +13,28 @@ import org.jbibtex.*;
 public class Cite {
 
     public static void main(String[] args) {
-        String doi = "10.1002/bip.20734";
-        String doi2bibURL = "https://www.doi2bib.org/8350e5a3e24c153df2275c9f80692773/doi2bib?id=" + doi;
+        String[] dois = {"10.1002/bip.20734", "10.4239/wjd.v5.i1.14", "10.1097/mco.0b013e32801481df", "10.2307/2583505", "10.1063/1.53736", "10.1002/9781119772125.ch9"};
+        String doi2bibURL = null;
+        String adoi = null;
+        for (int i = 0; i < dois.length; i++) {
+            adoi = dois[i];
+            doi2bibURL = "https://www.doi2bib.org/8350e5a3e24c153df2275c9f80692773/doi2bib?id=" + adoi;
+            try {
+                String bibData = fetchBibData(doi2bibURL);
+                String apaCitation = convertToAPA(bibData, adoi);
 
-        try {
-            String bibData = fetchBibData(doi2bibURL);
-            String apaCitation = convertToAPA(bibData, doi);
-
-            System.out.println("APA Citation:");
-            String correctedString = apaCitation.replace('�', '-');
-            System.out.println(correctedString);
-        } catch (Exception e) {
-            e.printStackTrace();
+                System.out.println("APA Citation:");
+                String correctedString = apaCitation.replace('�', '–'); // Replace '�' with '–'
+                System.out.println(correctedString + "\n\n");
+            } catch (NullPointerException e) {
+                System.err.println("Required BibTeX field is missing for the provided DOI.");
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
     public static String fetchBibData(String doi2bibURL) throws Exception {
         URL url = new URL(doi2bibURL);
