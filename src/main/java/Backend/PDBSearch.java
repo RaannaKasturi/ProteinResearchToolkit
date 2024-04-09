@@ -4,8 +4,10 @@ import Frontend.MainFrame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
@@ -20,11 +22,12 @@ public class PDBSearch {
         this.mainFrame = mainFrame;
     }
     
-    public String[] getPDBID() {
+    public String[] getPDBID() throws UnsupportedEncodingException {
         List<String> identifiersList = new ArrayList<>();
-        String query = mainFrame.getPDBSearchText();
+        String query = URLEncoder.encode(mainFrame.getPDBSearchText(), "UTF-8");
+        DefaultTableModel model = (DefaultTableModel) mainFrame.jTable2.getModel();
         try {
-            String urlEndpoint = "https://search.rcsb.org/rcsbsearch/v2/query?json=%7B%22query%22%3A%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22full_text%22%2C%22parameters%22%3A%7B%22value%22%3A%22"+query+"%22%7D%7D%2C%22return_type%22%3A%22entry%22%7D";
+            String urlEndpoint = "https://search.rcsb.org/rcsbsearch/v2/query?json=%7B%22query%22%3A%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22full_text%22%2C%22parameters%22%3A%7B%22value%22%3A%22"+query+"%22%7D%7D%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A50%7D%7D%2C%22return_type%22%3A%22entry%22%7D";
             
             URL url = new URL(urlEndpoint);
             
@@ -53,6 +56,7 @@ public class PDBSearch {
             conn.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
+            model.addRow(new Object[]{"No data found.", "No data found.", "No data found.", "No data found.", "No data found."});
         }
         
         String[] identifiersArray = identifiersList.toArray(new String[identifiersList.size()]);
@@ -86,10 +90,10 @@ public class PDBSearch {
             methods.setLength(methods.length() - 2);
         }
         DefaultTableModel model = (DefaultTableModel) mainFrame.jTable2.getModel();
+        model.setRowCount(0);
         SwingUtilities.invokeLater(() -> {
             model.addRow(new Object[]{rcsbId, title, methods.toString(), "Visualize in 3D", "Send to Structure Alignment"});
         });
-
         connection.disconnect();
     }
 }

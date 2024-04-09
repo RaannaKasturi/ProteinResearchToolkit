@@ -12,10 +12,10 @@ import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ArticleSearch {
+public class LiteratureSearch {
     private MainFrame mainFrame;
 
-    public ArticleSearch(MainFrame mainFrame) {
+    public LiteratureSearch(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
     }
     
@@ -46,7 +46,7 @@ public class ArticleSearch {
     public void ArticleSearch(String query) {
         String actualquery = query.replace(" ", "+");
         try {
-            String apiUrl = "https://api.crossref.org/works?query.title="+actualquery+"&select=DOI,title,author,issued,is-referenced-by-count&rows=2&mailto=support@crossref.org";
+            String apiUrl = "https://api.crossref.org/works?query.title="+actualquery+"&select=DOI,title,author,issued,is-referenced-by-count&rows=100&mailto=support@crossref.org";
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -67,7 +67,8 @@ public class ArticleSearch {
 
             JSONObject jsonObject = new JSONObject(output.toString());
             JSONArray items = jsonObject.getJSONObject("message").getJSONArray("items");
-
+            DefaultTableModel model = (DefaultTableModel) mainFrame.jTable3.getModel();
+            model.setRowCount(0);
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
                 String doi = item.optString("DOI", "Data not found");
@@ -95,23 +96,13 @@ public class ArticleSearch {
                 String articleURL = "https://sci-hub.se/" + doi;
                 if (isPDF(articleURL)==true) {
                     articleURL = "https://sci-hub.se/" + doi;
-                    System.out.println("The URL contains a PDF file.");
                 } else {
                     articleURL = "https://dx.doi.org/" + doi;
-                    System.out.println("The URL does not contain a PDF file.");
                 }
                 final String aURL = articleURL;
-                System.out.println(articleURL);
-                
-                DefaultTableModel model = (DefaultTableModel) mainFrame.jTable3.getModel();
                 SwingUtilities.invokeLater(() -> {
                     model.addRow(new Object[]{doi, title,authors.toString(), date, timescited, aURL});
                 });
-//                System.out.println("DOI: " + doi);
-//                System.out.println("Title: " + title);
-//                System.out.println("Authors: " + authors.toString());
-//                System.out.println("Issued Date: " + issuedDate);
-//                System.out.println();
             }
 
         } catch (IOException e) {

@@ -6,8 +6,10 @@ import javax.swing.table.DefaultTableModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +40,8 @@ public class UniProtSearch {
         return data;
     }
 
-    public void dispUniProt() {
-        String pquery = mainFrame.getUniSearchText();
+    public void dispUniProt() throws UnsupportedEncodingException {
+        String pquery = URLEncoder.encode(mainFrame.getUniSearchText(), "UTF-8");
         String url = "https://rest.uniprot.org/uniprotkb/search?download=true&fields=accession%2Cid%2Cgene_names%2Corganism_name%2Clength%2Csequence&format=tsv&query=%28" + pquery + "%29&size=50";
         DefaultTableModel model = mainFrame.getTableModel();
         model.setRowCount(0);

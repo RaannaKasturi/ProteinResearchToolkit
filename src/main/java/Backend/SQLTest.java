@@ -1,32 +1,73 @@
 package Backend;
 
+import Frontend.MainFrame;
+import Frontend.UserAccount;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.regex.*;
-/**
- *
- * @author prarthi kothari
- */
+
+
 public class SQLTest {
 
-    /**
-     * @param args the command line arguments
-     */
+    private MainFrame mainFrame;
+    private UserAccount UserAccount;
+
+    public SQLTest(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
+    public SQLTest(UserAccount UserAccount) {
+        this.UserAccount = UserAccount;
+    }
     
     Scanner sc = new Scanner(System.in);
     String sql_email_id, sql_password, sql_license_key;
     int choice;
     
-    public void login()
+    public String generateLicenseKey() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMMddHHmmss");
+        String formattedDate = dateFormat.format(new java.util.Date());
+        return "PTK" + formattedDate + "NPK";
+    }
+    
+    public void savedata(String email, String pass, String key){
+        String[] words = {email, pass, key};
+
+        // Relative file path within the project directory
+        String filePath = "assets/words.txt";
+
+        try {
+            // Create a BufferedWriter to write to the file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                // Write nothing to erase the contents
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+
+            // Write each word to the file on a separate line
+            for (String word : words) {
+                writer.write(word); // Write the word
+                writer.newLine();   // Write a new line
+            }
+
+            // Close the writer
+            writer.close();
+
+            System.out.println("Words have been written to the file successfully.");
+        } catch (IOException e) {
+            System.err.println("Error writing to the file: " + e.getMessage());
+        }
+    }
+    
+    public String[] login()
     {
         try {
             boolean user_input = true;
-            System.out.println("Enter Email ID: ");
-            String email_id = sc.next();
-            System.out.println("Enter Password: ");
-            String password = sc.next();
+            String email_id = UserAccount.jTextField1.getText();
+            String password = UserAccount.jTextField2.getText();
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
@@ -54,18 +95,24 @@ public class SQLTest {
 
                     if (email_id.equals(sql_email_id) && password.equals(sql_password)) {
                         System.out.println("Login Successful.");
+                        UserAccount.jLabel5.setText("Login Succesfull");
                         user_input = false;
                     } 
                     else {
+                        UserAccount.jLabel5.setText("Credentials do not match with Email ID");
                         System.out.println("Credentials do not match with email id.");
                     }
                 }
-
                 else {
+                    UserAccount.jLabel5.setText("User not found. Please Register");
                     System.out.println("User not found. Register to continue.");
                     user_input = false;
                 }
             }
+            savedata(sql_email_id, sql_password, sql_license_key);
+            mainFrame.jLabel2.setText(sql_email_id);
+            mainFrame.jLabel3.setText(sql_password);
+            mainFrame.jLabel4.setText("Registered");
             rs.close();
             smt.close();
             con.close();
@@ -78,18 +125,18 @@ public class SQLTest {
         catch(Exception e)
         {
             e.printStackTrace();
-        }            
+        }
+        String[] params = {sql_email_id, sql_password};
+        return params;
     }
     
-    public void register_user()
+    public void register()
     {
         try
         {
-            System.out.println("Enter Email ID: ");
-            String email_id = sc.next();
-            System.out.println("Enter Password: ");
-            String password = sc.next();
-            String license_key = generateLicenseKey();
+            String email_id = UserAccount.jTextField1.getText();
+            String password = UserAccount.jTextField2.getText();
+            String rlicense_key = generateLicenseKey();
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
@@ -102,23 +149,25 @@ public class SQLTest {
             
             System.out.println("Registration Successful.");
 
-            String sql1 = "INSERT INTO APPDATA VALUES('" + email_id + "','" + password + "','" + license_key + "');";
+            String sql1 = "INSERT INTO APPDATA VALUES('" + email_id + "','" + password + "','" + rlicense_key + "');";
             smt.executeUpdate(sql1);
                         
             String sql2 = "SELECT * FROM APPDATA WHERE EMAIL_ID = '" + email_id + "';";
             ResultSet rs = smt.executeQuery(sql2);
 
             if (rs.next()) {
-                sql_email_id = rs.getString("EMAIL_ID");
-                sql_password = rs.getString("PASSWORD");
-                sql_license_key = rs.getString("LICENSE_KEY");
+                String sql_remail_id = rs.getString("EMAIL_ID");
+                String sql_rpassword = rs.getString("PASSWORD");
+                String sql_rlicense_key = rs.getString("LICENSE_KEY");
                 
                 System.out.println("*FINAL DETAILS POST REGISTRATION*");
-                System.out.println("Email ID: " + sql_email_id);
-                System.out.println("Password: " + sql_password);
-                System.out.println("License Key: " + sql_license_key);
+                System.out.println("Email ID: " + sql_remail_id);
+                System.out.println("Password: " + sql_rpassword);
+                System.out.println("License Key: " + sql_rlicense_key);
+                savedata(sql_remail_id, sql_rpassword, sql_rlicense_key);
             }
-            
+            UserAccount.jTextField3.setText(rlicense_key);
+            UserAccount.jLabel5.setText("Registration Succesfull");
             smt.close();
             con.close();
         }
@@ -132,41 +181,5 @@ public class SQLTest {
             e.printStackTrace();
         }
 
-    }
-    
-    public static String generateLicenseKey() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMMddHHmmss");
-        String formattedDate = dateFormat.format(new Date(System.currentTimeMillis()));
-        return "PTK" + formattedDate + "NPK";
-    }
-    
-    public static void main(String[] args) {
-        
-        SQLTest obj = new SQLTest();
-        System.out.println("*MAIN MENU*");
-        
-        boolean flag = true;
-        
-        while(flag)
-        {
-            System.out.println("\nSelect 1 or 2 or 3");
-            System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Exit");
-            System.out.print("Enter your choice: ");
-            obj.choice = obj.sc.nextInt();
-            switch(obj.choice)
-            {
-                case 1: obj.login(); flag = false; break;
-                case 2: obj.register_user(); flag = false; break;
-                case 3: System.out.println("Option selected : 3. Exit"); System.exit(0); break;
-                default: System.out.println("No Option selected. Select only from 1 or 2 or 3"); break;
-            }
-            if (flag == false)
-            {
-                break;
-            }
-        }
-    }
-    
+    }    
 }
