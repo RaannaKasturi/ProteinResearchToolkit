@@ -1,7 +1,6 @@
 package Backend;
 
 import Frontend.MainFrame;
-import Frontend.UserAccount;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
@@ -14,14 +13,9 @@ import javax.swing.SwingUtilities;
 
 public class ProcessDialog {
     private MainFrame mainFrame;
-    private UserAccount UserAccount;
     
     public ProcessDialog(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-    }
-
-    public ProcessDialog(UserAccount UserAccount) {
-        this.UserAccount = UserAccount;
     }
     
     public void processDialog(Runnable function) {

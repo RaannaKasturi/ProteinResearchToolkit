@@ -66,6 +66,7 @@ public class PDBSearch {
     
     public void dispPDB(String PDBID) throws IOException {
         String endpoint = "https://data.rcsb.org/rest/v1/core/entry/"+PDBID;
+        DefaultTableModel model = (DefaultTableModel) mainFrame.jTable2.getModel();
         URL url = new URL(endpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -89,8 +90,6 @@ public class PDBSearch {
         if (methods.length() > 0) {
             methods.setLength(methods.length() - 2);
         }
-        DefaultTableModel model = (DefaultTableModel) mainFrame.jTable2.getModel();
-        model.setRowCount(0);
         SwingUtilities.invokeLater(() -> {
             model.addRow(new Object[]{rcsbId, title, methods.toString(), "Visualize in 3D", "Send to Structure Alignment"});
         });

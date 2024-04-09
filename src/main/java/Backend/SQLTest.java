@@ -1,7 +1,6 @@
 package Backend;
 
 import Frontend.MainFrame;
-import Frontend.UserAccount;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,13 +12,9 @@ import java.util.Scanner;
 public class SQLTest {
 
     private MainFrame mainFrame;
-    private UserAccount UserAccount;
 
     public SQLTest(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-    }
-    public SQLTest(UserAccount UserAccount) {
-        this.UserAccount = UserAccount;
     }
     
     Scanner sc = new Scanner(System.in);
@@ -36,7 +31,7 @@ public class SQLTest {
         String[] words = {email, pass, key};
 
         // Relative file path within the project directory
-        String filePath = "assets/words.txt";
+        String filePath = "./assets/Credentials.txt";
 
         try {
             // Create a BufferedWriter to write to the file
@@ -62,12 +57,12 @@ public class SQLTest {
         }
     }
     
-    public String[] login()
+    public void login()
     {
         try {
             boolean user_input = true;
-            String email_id = UserAccount.jTextField1.getText();
-            String password = UserAccount.jTextField2.getText();
+            String email_id = mainFrame.jTextField5.getText();
+            String password = mainFrame.jTextField6.getText();
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Registered");
@@ -95,29 +90,28 @@ public class SQLTest {
 
                     if (email_id.equals(sql_email_id) && password.equals(sql_password)) {
                         System.out.println("Login Successful.");
-                        UserAccount.jLabel5.setText("Login Succesfull");
+                        mainFrame.jLabel9.setText("Login Succesfull");
                         user_input = false;
                     } 
                     else {
-                        UserAccount.jLabel5.setText("Credentials do not match with Email ID");
+                        mainFrame.jLabel9.setText("Credentials do not match with Email ID");
                         System.out.println("Credentials do not match with email id.");
                     }
                 }
                 else {
-                    UserAccount.jLabel5.setText("User not found. Please Register");
+                    mainFrame.jLabel9.setText("User not found. Please Register");
                     System.out.println("User not found. Register to continue.");
                     user_input = false;
                 }
             }
             savedata(sql_email_id, sql_password, sql_license_key);
             mainFrame.jLabel2.setText(sql_email_id);
-            mainFrame.jLabel3.setText(sql_password);
+            mainFrame.jLabel3.setText(sql_license_key);
             mainFrame.jLabel4.setText("Registered");
             rs.close();
             smt.close();
             con.close();
         }
-        
         catch(SQLException se)
         {
             se.printStackTrace();
@@ -126,16 +120,14 @@ public class SQLTest {
         {
             e.printStackTrace();
         }
-        String[] params = {sql_email_id, sql_password};
-        return params;
     }
     
     public void register()
     {
         try
         {
-            String email_id = UserAccount.jTextField1.getText();
-            String password = UserAccount.jTextField2.getText();
+            String email_id = mainFrame.jTextField5.getText();
+            String password = mainFrame.jTextField6.getText();
             String rlicense_key = generateLicenseKey();
             
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -166,8 +158,8 @@ public class SQLTest {
                 System.out.println("License Key: " + sql_rlicense_key);
                 savedata(sql_remail_id, sql_rpassword, sql_rlicense_key);
             }
-            UserAccount.jTextField3.setText(rlicense_key);
-            UserAccount.jLabel5.setText("Registration Succesfull");
+            mainFrame.jTextField7.setText(rlicense_key);
+            mainFrame.jLabel9.setText("Registration Succesfull");
             smt.close();
             con.close();
         }
