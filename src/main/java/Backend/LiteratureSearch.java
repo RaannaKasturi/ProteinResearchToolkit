@@ -33,7 +33,6 @@ public class LiteratureSearch {
             reader.close();
             String pageSourceString = pageSource.toString(); 
             if (pageSourceString != null && (pageSourceString.contains("application/pdf") || pageSourceString.contains("application/x-pdf"))) {
-                //System.out.println("The URL " + urlString + " contains a PDF file.");
                 return true;
             }
         } catch (IOException e) {
@@ -51,20 +50,16 @@ public class LiteratureSearch {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
-
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
-
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
             StringBuilder output = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
                 output.append(line);
             }
-
             conn.disconnect();
-
             JSONObject jsonObject = new JSONObject(output.toString());
             JSONArray items = jsonObject.getJSONObject("message").getJSONArray("items");
             DefaultTableModel model = (DefaultTableModel) mainFrame.jTable3.getModel();
@@ -104,7 +99,6 @@ public class LiteratureSearch {
                     model.addRow(new Object[]{doi, title,authors.toString(), date, timescited, aURL});
                 });
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

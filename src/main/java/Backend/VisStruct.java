@@ -20,7 +20,6 @@ public class VisStruct {
             Structure struc = pdbr.getStructureById(pdbCode);
             BiojavaJmol jmolPanel = new BiojavaJmol();
             jmolPanel.setStructure(struc);
-            // send some RASMOL style commands to Jmol
             jmolPanel.evalString("select * ; backbone on;");
             jmolPanel.evalString("select * ; color chain;");
             jmolPanel.evalString("select *; spacefill off; wireframe off; backbone 0.4;  ");

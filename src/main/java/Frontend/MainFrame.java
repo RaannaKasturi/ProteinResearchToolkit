@@ -61,13 +61,8 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
     public void verify() {
-        // Specify the path to your text file
         String filePath = "./assets/Credentials.txt";
-
-        // Create a list to store lines from the file
         List<String> lines = new ArrayList<>();
-
-        // Read the file and store each line as a string variable
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -76,8 +71,6 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Print only the second line if it exists
         if (lines.size() >= 2) {
             jLabel2.setText(lines.get(0));
             jLabel3.setText(lines.get(1));
@@ -156,14 +149,14 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(50, 50));
 
-        jLabel2.setText("Default User");
+        jLabel2.setText("Default Email ID");
 
-        jLabel3.setText("Default Email ID");
+        jLabel3.setText("Default License Key");
 
         jLabel4.setText("Unregistered");
 
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel15.setText("Bioinformatics Research Toolkit");
+        jLabel15.setText("Protein Research Toolkit");
 
         jButton6.setText("Activate Software");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -513,11 +506,6 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextField4MouseClicked(evt);
             }
         });
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
         jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField4KeyPressed(evt);
@@ -561,8 +549,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CitationLayout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
                     .addGroup(CitationLayout.createSequentialGroup()
                         .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -570,11 +558,11 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
-                            .addComponent(jScrollPane5)
+                        .addGroup(CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane8))))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         CitationLayout.setVerticalGroup(
             CitationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -633,6 +621,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText(" ");
 
         javax.swing.GroupLayout UserAccountLayout = new javax.swing.GroupLayout(UserAccount);
@@ -696,7 +685,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1056, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1061, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
@@ -717,7 +706,6 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         pd.processDialog(() -> {
             try {
                 uni.dispUniProt();
@@ -837,7 +825,6 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3MouseClicked
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
         jTabbedPane1.setSelectedIndex(5);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -848,10 +835,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         pd.processDialog(() -> st.login());
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments

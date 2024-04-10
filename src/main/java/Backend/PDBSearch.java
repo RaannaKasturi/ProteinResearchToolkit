@@ -28,13 +28,9 @@ public class PDBSearch {
         DefaultTableModel model = (DefaultTableModel) mainFrame.jTable2.getModel();
         try {
             String urlEndpoint = "https://search.rcsb.org/rcsbsearch/v2/query?json=%7B%22query%22%3A%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22full_text%22%2C%22parameters%22%3A%7B%22value%22%3A%22"+query+"%22%7D%7D%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A50%7D%7D%2C%22return_type%22%3A%22entry%22%7D";
-            
             URL url = new URL(urlEndpoint);
-            
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            
             conn.setRequestMethod("GET");
-            
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
@@ -42,23 +38,18 @@ public class PDBSearch {
                 response.append(line);
             }
             reader.close();
-            
             JSONObject jsonResponse = new JSONObject(response.toString());
             JSONArray resultSet = jsonResponse.getJSONArray("result_set");
-            
             for (int i = 0; i < resultSet.length(); i++) {
                 JSONObject entry = resultSet.getJSONObject(i);
                 String identifier = entry.getString("identifier");
-                
                 identifiersList.add(identifier);
             }
-            
             conn.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
             model.addRow(new Object[]{"No data found.", "No data found.", "No data found.", "No data found.", "No data found."});
         }
-        
         String[] identifiersArray = identifiersList.toArray(new String[identifiersList.size()]);
         return identifiersArray;
     }

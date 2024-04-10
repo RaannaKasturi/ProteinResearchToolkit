@@ -8,7 +8,6 @@ Frontend\MainFrame$16.class
 Frontend\MainFrame$3.class
 Backend\GenerateCitation.class
 Frontend\MainFrame$13.class
-Backend\LicenseKeyGenVerify.class
 Frontend\MainFrame$18.class
 Frontend\MainFrame$8.class
 Backend\LiteratureSearch.class
@@ -23,7 +22,6 @@ Frontend\MainFrame.class
 Backend\ProcessDialog.class
 Backend\PDBSearch.class
 Frontend\MainFrame$7.class
-Backend\Cite.class
 Backend\VisStruct.class
 Frontend\MainFrame$2.class
 Frontend\MainFrame$9.class

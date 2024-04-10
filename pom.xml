@@ -5,7 +5,7 @@
     
     <groupId>com.raanna</groupId>
     
-    <artifactId>ProteinToolkit</artifactId>
+    <artifactId>ProteinResearchToolkit</artifactId>
     <version>1.0</version>
     
     <packaging>jar</packaging>
@@ -181,6 +181,6 @@
             </plugin>
         </plugins>
     </build>
-    <name>Protein Toolkit</name>
+    <name>ProteinResearchToolkit</name>
     <description>Java based Protein Toolkit GUI</description>
 </project>

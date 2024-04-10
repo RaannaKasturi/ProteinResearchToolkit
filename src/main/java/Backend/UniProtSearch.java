@@ -1,7 +1,6 @@
 package Backend;
 
 import Frontend.MainFrame;
-
 import javax.swing.table.DefaultTableModel;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,19 +23,15 @@ public class UniProtSearch {
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String line;
         List<String[]> data = new ArrayList<>();
-
         while ((line = reader.readLine()) != null) {
             String[] columns = line.split("\t");
             data.add(columns);
         }
-
         reader.close();
         connection.disconnect();
-
         return data;
     }
 
